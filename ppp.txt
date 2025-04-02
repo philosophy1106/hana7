@@ -16,3 +16,4 @@ finished777
 300
 400
 500
+regist
