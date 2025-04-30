@@ -1,4 +1,47 @@
 console.log("3번 문제---------");
+function shallowCopy(obj) {
+  // return {...obj}; // 정답!!
+  const ret = {};
+  for (const [k, v] of Object.entries(obj)) {
+    ret[k] = v;
+  }
+  return ret;
+}
+
+const kim = { nid: 3, nm: "Kim", addr: "Pusan" };
+// const newKim1 = shallowCopy(kim);
+// const newKim1 = Object.assign({}, kim); kim을 할당해줘.
+const newKim1 = { ...kim }; //kim을 다 풀어줘... 메모리 주소만 다르고 내용 같음음
+newKim1.addr = "Daegu";
+console.log(kim.addr !== newKim1.addr); // true면 통과!
+
+// 2) 이하 deep copy
+const kim2 = {
+  nid: 3,
+  nm: "Kim",
+  nil: null,
+  addr: { city: "Pusan", road: "Haeundaero", zip: null, detail: { dong: 123 } },
+};
+
+function deepCopy(obj) {
+  const ret = {};
+  for (const [k, v] of Object.entries(obj)) {
+    // ret[k] = v !== null && typeof v === 'object' ? { ...v } : v;
+    if (v !== null && typeof v === "object") {
+      ret[k] = deepCopy(v); //addr가 obj이니까... 재귀함수로 처리함
+    } else {
+      ret[k] = v;
+    }
+  }
+  return ret;
+}
+const newKim2 = deepCopy(kim2);
+newKim2.addr.city = "Daegu";
+newKim2.addr.detail.dong = 999;
+console.log(kim2.addr.city !== newKim2.addr.city); // true면 통과!
+console.log(kim2, "vs", newKim2);
+
+return;
 
 console.log("2번 문제 -----------");
 data = [
@@ -26,7 +69,7 @@ function makeArrayFromObject(objdata) {
 }
 console.log(makeObjectFromArray(data));
 
-return;
+//return;
 
 console.log("1번 문제 -----------");
 const arr = [100, 200, 300, 400, 500, 600, 700];
@@ -57,7 +100,4 @@ Object.defineProperty(obj, "level", { enumerable: false });
 console.log(Object.values(obj));
 
 console.log("1-7.role 프로퍼티를 읽기 전용으로");
-Object.defineProperty(obj, "role", { writable: false });
-//Object.freeze? ummm...
-obj["role"] = 8;
-console.log("🚀 ~ role:", obj["role"]);
+Object.freeze(obj); //freexe 더이상 변경 불가

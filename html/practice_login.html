@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter1test</title>
+    <style>
+      .gblue {
+        color: rgb(28, 206, 215);
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.config.js"></script>
+  </head>
+
+  <body class="ml-32 mr-32 mt-7">
+    <form
+      id="frm"
+      name="frm"
+      method="POST"
+      class="border-2 rounded-lg border-black p-20"
+    >
+      <div class="flex-col md: flex md:gap-10">
+        <p class="font-bold text-5xl text-center">Login</p>
+        <span>
+          <span class="pr-10">Email</span>
+          <input
+            type="email"
+            id="email"
+            class="border border-blue-400 px-6 justify-center"
+          />
+        </span>
+        <span>
+          <span class="pr-3">Password</span>
+          <input
+            type="password"
+            id="password"
+            class="border border-blue-400 px-6 justify-center"
+          />
+        </span>
+
+        <div class="flex justify-between">
+          <button class="underline underline-offset-4 gblue px-2" type="submit">
+            Regist
+          </button>
+          <button
+            class="bg-blue-600 hover:bg-blue-900 text-white px-7 rounded-md shadow-md p-1.5"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>

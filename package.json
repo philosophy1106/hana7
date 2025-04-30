@@ -1,0 +1,22 @@
+{
+  "name": "hana7",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philosophy1106/hana7.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/philosophy1106/hana7/issues"
+  },
+  "homepage": "https://github.com/philosophy1106/hana7#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.14.1"
+  }
+}
