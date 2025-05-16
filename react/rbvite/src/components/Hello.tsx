@@ -1,9 +1,14 @@
 import {
+  use,
   useImperativeHandle,
   type ForwardedRef,
   type PropsWithChildren,
   type RefObject,
 } from "react";
+import { CounterContext } from "../contexts/counter/CounterContext";
+import { useToggle } from "../hooks/useToggle";
+import { useFetch } from "../hooks/useFetch";
+import LabelInput from "./LabelInput";
 
 export type HelloHandler = {
   xx: string;
@@ -11,21 +16,25 @@ export type HelloHandler = {
 };
 
 type Props = {
-  name: string;
-  age: number;
-  plusCount: () => void;
+  id: number;
   helloButtonRef: RefObject<HTMLButtonElement | null>;
   refx: ForwardedRef<HelloHandler>;
 };
 
+type User = {
+  id: number;
+  name: string;
+};
+
 export default function Hello({
-  name,
-  age,
-  plusCount,
+  id,
   helloButtonRef,
   children,
   refx,
 }: PropsWithChildren<Props>) {
+  const { plusCount } = use(CounterContext);
+  const [reloadFlag, toggleReload] = useToggle();
+
   const helloHandler = {
     xx: "XXXX",
     sayHello() {
@@ -34,16 +43,31 @@ export default function Hello({
   };
 
   useImperativeHandle(refx, () => helloHandler);
+
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useFetch<User>(`https://jsonplaceholder.typicode.com/users/${id}`, [
+    id,
+    reloadFlag,
+  ]);
+
   return (
     <div className="border">
       <h3>
-        Hello {name} <small>({age})</small>
+        Hello, {isLoading ? "..." : user?.name}
+        <div>{error}</div>
       </h3>
-      <div>{children}</div>
-      <button ref={helloButtonRef} onClick={plusCount}>
-        {" "}
+      <div>
+        {children}({id})
+      </div>
+      <button ref={helloButtonRef} onClick={() => plusCount()}>
         count + 1
       </button>
+      <button onClick={toggleReload}>Reload</button>
+      <LabelInput label="email" />
+      <LabelInput label="nickname" />
     </div>
   );
 }

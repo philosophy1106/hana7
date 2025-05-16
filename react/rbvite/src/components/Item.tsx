@@ -1,21 +1,14 @@
-import { useRef, useState, type FormEvent } from "react";
-import type { Cart } from "../App";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useSession, type Cart } from "../contexts/session/SessionContext";
 
 type Props = {
   item: Cart;
-  removeItem: (id: number) => void;
-  addItem: (name: string, price: number) => void;
-  editItem: (item: Cart) => void;
-  toggleAdding?: () => void; //toggle 은 on, off 스위치 개념념
+  toggleAdding?: () => void; //toggle 은 on, off 스위치 개념념a
+  addExpectPrice: (price: number) => void;
 };
 
-export default function Item({
-  item,
-  removeItem,
-  addItem,
-  editItem,
-  toggleAdding,
-}: Props) {
+export default function Item({ item, addExpectPrice, toggleAdding }: Props) {
+  const { removeItem, addItem, editItem } = useSession();
   const [isEditing, setEditing] = useState(!item.id);
   const [hasDirty, setDirty] = useState(false);
 
@@ -53,6 +46,7 @@ export default function Item({
     setEditing(false);
     setDirty(false);
     if (toggleAdding) toggleAdding();
+    if (!item.id && itemPriceRef.current) addExpectPrice(0);
   };
 
   const checkDirty = () => {
@@ -61,6 +55,11 @@ export default function Item({
         Number(itemPriceRef.current?.value) !== item.price
     );
   };
+
+  useEffect(() => {
+    if (!item.id) addExpectPrice(item.price);
+  }, []);
+
   return (
     <>
       {isEditing ? (
@@ -77,7 +76,7 @@ export default function Item({
             ref={itemPriceRef}
             placeholder="금액..."
             className="w-sm"
-            onChange={checkDirty}
+            onChange={() => {}}
           />
           <button type="reset" className="p-sm">
             취소
