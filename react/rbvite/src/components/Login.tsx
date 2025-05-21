@@ -17,7 +17,7 @@ export type LoginHandler = {
   validate: () => boolean;
 };
 
-export default function Login() {
+export default function Login({ title = "LOGIN" }: { title?: string }) {
   const { login, loginHandler: loginHandlerRef } = useSession();
   const { plusCount, minusCount } = useCounter();
   const [x, setX] = useState(0);
@@ -81,8 +81,12 @@ export default function Login() {
   useEffect(() => idRef.current?.focus(), []);
   // useInterval(console.log, 1000, x);
 
+  const tit = `MyBlob::${title}`;
+
   return (
     <>
+      <title>{tit}</title>
+      <meta name="Author" content={tit} />
       <form onSubmit={makeLogin}>
         <div>
           LoginID({x}):

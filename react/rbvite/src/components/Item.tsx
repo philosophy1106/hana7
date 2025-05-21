@@ -1,13 +1,23 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { useSession, type Cart } from "../contexts/session/SessionContext";
+import { useSession } from "../contexts/session/SessionContext";
+import { useParams } from "react-router-dom";
 
 type Props = {
-  item: Cart;
   toggleAdding?: () => void; //toggle 은 on, off 스위치 개념념a
-  addExpectPrice: (price: number) => void;
+  addExpectPrice?: (price: number) => void;
 };
 
-export default function Item({ item, addExpectPrice, toggleAdding }: Props) {
+export default function Item({ addExpectPrice, toggleAdding }: Props) {
+  const {
+    session: { cart },
+  } = useSession();
+  const param = useParams();
+  const item = cart.find((item) => item.id === Number(param.id)) || {
+    id: 0,
+    name: "",
+    price: 3000,
+  };
+
   const { removeItem, addItem, editItem } = useSession();
   const [isEditing, setEditing] = useState(!item.id);
   const [hasDirty, setDirty] = useState(false);
@@ -46,7 +56,7 @@ export default function Item({ item, addExpectPrice, toggleAdding }: Props) {
     setEditing(false);
     setDirty(false);
     if (toggleAdding) toggleAdding();
-    if (!item.id && itemPriceRef.current) addExpectPrice(0);
+    if (!item.id && itemPriceRef.current && addExpectPrice) addExpectPrice(0);
   };
 
   const checkDirty = () => {
@@ -57,7 +67,7 @@ export default function Item({ item, addExpectPrice, toggleAdding }: Props) {
   };
 
   useEffect(() => {
-    if (!item.id) addExpectPrice(item.price);
+    if (!item.id && addExpectPrice) addExpectPrice(item.price);
   }, []);
 
   return (
@@ -67,6 +77,7 @@ export default function Item({ item, addExpectPrice, toggleAdding }: Props) {
           <input
             type="text"
             ref={itemNameRef}
+            defaultValue={item.name}
             className="w-sm"
             placeholder="상품명..."
             onChange={checkDirty}
@@ -76,7 +87,11 @@ export default function Item({ item, addExpectPrice, toggleAdding }: Props) {
             ref={itemPriceRef}
             placeholder="금액..."
             className="w-sm"
-            onChange={() => {}}
+            onChange={(evt) => {
+              checkDirty();
+              if (!item.id && addExpectPrice)
+                addExpectPrice(item.id ? 0 : Number(evt.target.value));
+            }}
           />
           <button type="reset" className="p-sm">
             취소

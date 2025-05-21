@@ -81,6 +81,23 @@ ul {
   margin-right: 0.5rem;
 }
 
+.m-1 {
+  margin: 1rem;
+}
+
 .w-sm {
-  width: 5rem;
+  margin-left: 0.5rem;
+  width: 4rem;
+}
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}
+
+.underline {
+  text-decoration: underline;
 }
