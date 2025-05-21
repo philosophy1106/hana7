@@ -17,6 +17,11 @@
   "homepage": "https://github.com/philosophy1106/hana7#readme",
   "description": "",
   "devDependencies": {
-    "@types/node": "^22.14.1"
+    "@types/node": "^22.14.1",
+    "babel-plugin-react-compiler": "^19.1.0-rc.2",
+    "eslint-plugin-react-hooks": "^6.0.0-rc.1"
+  },
+  "dependencies": {
+    "react-compiler-runtime": "^19.1.0-rc.2"
   }
 }
