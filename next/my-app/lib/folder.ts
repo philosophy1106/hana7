@@ -2,9 +2,10 @@
 
 export type Folder = { id: number; title: string };
 const Folders = [
-  { id: 1, title: '공지사항' },
-  { id: 2, title: '자유게시판' },
-  { id: 3, title: '앨범' },
+  { id: 1, title: 'JS' },
+  { id: 2, title: 'TS' },
+  { id: 3, title: 'Next' },
+  { id: 4, title: 'etc' },
 ];
 
 export const getFolders = async (): Promise<Folder[]> =>
