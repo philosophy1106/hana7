@@ -56,7 +56,7 @@ public class Employee {
 		}
 
 		for (int i = 0; i < rate.length; i++) {
-			System.out.printf("%s의 연봉은 %d 월급 인상분은 %d \n",
+			System.out.printf("%s의 연봉은 %d 월급 인상분은 %d %n",
 				employees[i].toString(), employees[i].getAnnualSalary(), employees[i].raiseSalary(rate[i]));
 		}
 	}

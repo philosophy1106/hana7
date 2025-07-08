@@ -39,7 +39,7 @@ public class Account {
 
 	//송금 (내 계좌의 잔액은 줄어들고, another의 잔액은 늘어남)
 	public void transferTo(Account another, double amount) {
-		System.out.printf("%s이(가) %s에게 %,.0f원 송금 시도 \n", this.name, another.name, amount);
+		System.out.printf("%s이(가) %s에게 %,.0f원 송금 시도 %n", this.name, another.name, amount);
 		if (amount > this.balance) {
 			System.out.println("송금액이 잔액을 초과하였습니다");
 			return;
@@ -52,11 +52,11 @@ public class Account {
 	private void action(double amount) {
 		this.balance += amount;
 		String isDeposit = (amount > 0) ? "입금" : "출금";
-		System.out.printf("%s님 %,.0f원이 %s되었습니다 \n", this.name, Math.abs(amount), isDeposit);
+		System.out.printf("%s님 %,.0f원이 %s되었습니다 %n", this.name, Math.abs(amount), isDeposit);
 	}
 
 	public void checkBalance() {
-		System.out.printf("%s 님의 잔액은 %,.0f원 입니다.\n", this.name, this.balance);
+		System.out.printf("%s 님의 잔액은 %,.0f원 입니다.%n", this.name, this.balance);
 	}
 
 	public void display() {
@@ -121,7 +121,7 @@ public class Account {
 			if (action.equals("+") || action.equals("-")) {
 				boolean isDeposit = "+".equals(action);
 				String actionText = isDeposit ? "입금" : "출금";
-				System.out.printf("%s할 금액을 입력하시오 \n", actionText);
+				System.out.printf("%s할 금액을 입력하시오 %n", actionText);
 
 				double amount = sc.nextDouble();
 				if (isDeposit) {
