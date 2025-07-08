@@ -19,33 +19,51 @@ public class Account {
 		this.insert(accountNo, name, balance);
 	}
 
+	public String getAccountNo() {
+		return accountNo;
+	}
+
 	public void insert(String accountNo, String name, double balance) {
 		this.accountNo = accountNo;
 		this.name = name;
 		this.balance = balance;
 	}
 
-	public void deposit(double amount) {
+	public void deposit(int amount) {
 		this.action(amount);
 	}
 
-	public void withdraw(double amount) {
+	public void withdraw(int amount) {
+		this.withdraw(amount, Action.출금);
+	}
+
+	public void withdraw(int amount, Action action) {
 		if (amount > this.balance) {
-			System.out.println("잔액이 부족하여 출금할 수 없음!");
+			System.out.println(action + "액이 부족합니다!");
 			return;
 		}
 		this.action(-amount);
 	}
 
+	//객체 지향 프로그래밍 위해 인자로 수신인 받지 않음
+	private Account targetAccount;
+
+	public void setTargetAccount(Account targetAccount) {
+		this.targetAccount = targetAccount;
+	}
+
+	public void transferTo(int amount) {
+		this.transferTo((this.targetAccount), amount);
+	}
+
 	//송금 (내 계좌의 잔액은 줄어들고, another의 잔액은 늘어남)
-	public void transferTo(Account another, double amount) {
-		System.out.printf("%s이(가) %s에게 %,.0f원 송금 시도 %n", this.name, another.name, amount);
+	public void transferTo(Account targetAccount, int amount) {
 		if (amount > this.balance) {
 			System.out.println("송금액이 잔액을 초과하였습니다");
 			return;
 		}
-		this.withdraw(amount);
-		another.deposit(amount);
+		this.withdraw(amount, Action.송금);
+		targetAccount.deposit(amount);
 		this.checkBalance();
 	}
 
@@ -69,17 +87,18 @@ public class Account {
 		}
 	}
 
-	public static int findUser(Account[] accounts, String accountNo) {
-		for (int i = 0; i < accounts.length; i++) {
-			if (accounts[i].accountNo.equals(accountNo)) {
-				return i;
+	public static Account findByAccountNo(Account[] accounts, String accountNo) {
+		Account account = null;
+		for (Account acc : accounts) {
+			if (acc.getAccountNo().equals(accountNo)) {
+				account = acc;
 			}
 		}
-		return -1;
+		return account;
 	}
 
-	public static boolean isInvalidAccount(int userNo) {
-		if (userNo < 0) {
+	public static boolean isInvalidAccount(Account account) {
+		if (account == null) {
 			System.out.println("존재하지 않는 계좌입니다 다시 입력해 주세요");
 			return true;
 		}
@@ -103,48 +122,50 @@ public class Account {
 		displayAll(accounts);
 
 		while (true) {
-			//1. 어떤 손님이 은행 업무 중인지 선택
-			System.out.println("사용자의 계좌를 입력해 주세요");
-			String accountNo = sc.nextLine();
-			int userNo = findUser(accounts, accountNo);
-			if (isInvalidAccount(userNo)) {
-				continue;
-			}
-			//2. 어떤 은행 업무를 할 건지 선택
+			//어떤 은행 업무를 할 건지 선택
 			System.out.println("+: 입금, -: 출금, >: 송금 Q/Enter: 종료 ");
-			String action = sc.nextLine();
-			if (action.isBlank() || "Q".equalsIgnoreCase(action)) {
-				System.out.println("작업이 완료되었습니다");
+			Action action = null;
+			String cmd = sc.next();
+			for (Action act : Action.values()) {
+				if (act.isMe(cmd)) {
+					action = act;
+				}
+			}
+			if (action == Action.종료) {
 				break;
 			}
+			if (action == null) {
+				System.out.println("잘못된 입력입니다");
+				continue;
+			}
+			System.out.println(action + "할 계좌를 선택하세요");
+			System.out.print("계좌번호> ");
+			String accountNo = sc.next();
+			Account targetAccount = Account.findByAccountNo(accounts, accountNo);
+			if (isInvalidAccount(targetAccount)) {
+				continue;
+			}
+
 			//2. 입/출금/송금 세 가지 케이스
-			if (action.equals("+") || action.equals("-")) {
-				boolean isDeposit = "+".equals(action);
-				String actionText = isDeposit ? "입금" : "출금";
-				System.out.printf("%s할 금액을 입력하시오 %n", actionText);
-
-				double amount = sc.nextDouble();
-				if (isDeposit) {
-					accounts[userNo].deposit(amount);
-				} else {
-					accounts[userNo].withdraw(amount);
+			if (action == Action.송금) {
+				while (true) {
+					System.out.print("출금할 계좌는> ");
+					String acc = sc.next();
+					if (acc.equals(targetAccount.getAccountNo())) {
+						System.out.println("송금할 계좌와 출금할 계좌가 같을 수 없습니다!");
+					} else {
+						targetAccount.setTargetAccount(findByAccountNo(accounts, acc));
+						isInvalidAccount(targetAccount);
+						break;
+					}
 				}
-				sc.nextLine();
-			} else if (action.equals(">")) {
-				System.out.println("송금할 계좌 번호와 금액을 입력하세요");
-				String str = sc.nextLine();
-				String[] param = str.split("\\s+");
 
-				String another = param[0];
-				int amount = Integer.parseInt(param[1]);
-
-				int anotherNo = findUser(accounts, another);
-				if (isInvalidAccount(anotherNo)) {
-					continue;
-				}
-				accounts[userNo].transferTo(accounts[anotherNo], amount);
+			}
+			if (action == Action.조회) {
+				action.banking(targetAccount, 0);
 			} else {
-				System.out.println("잘못된 입력입니다 다시 선택해 주세요");
+				System.out.print("얼마를 " + action + "하시겠어요? ");
+				action.banking(targetAccount, sc.nextInt());
 			}
 		}
 		System.out.println("은행 업무 이후 계좌 정보");
