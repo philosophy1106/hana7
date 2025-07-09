@@ -19,7 +19,9 @@
   "devDependencies": {
     "@types/node": "^22.14.1",
     "babel-plugin-react-compiler": "^19.1.0-rc.2",
-    "eslint-plugin-react-hooks": "^6.0.0-rc.1"
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-react-hooks": "^6.0.0-rc.1",
+    "prettier": "^3.5.3"
   },
   "dependencies": {
     "react-compiler-runtime": "^19.1.0-rc.2"
