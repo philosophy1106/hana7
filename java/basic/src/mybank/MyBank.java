@@ -18,12 +18,12 @@ public class MyBank {
 		for (int i = 0; i < appAccounts.length; i++) {
 			appAccounts[i] = new AppAccount<>(accounts[i]);
 		}
-		for (AppAccount<?> aacc : appAccounts) {
-			System.out.println("aacc = " + aacc.toString());
-			int balance = aacc.deposit(1000);
+		for (AppAccount<?> acc : appAccounts) {
+			System.out.println("acc = " + acc.toString());
+			int balance = acc.deposit(1000);
 			System.out.println("deposit = " + balance);
 			try {
-				System.out.println("With balance = " + aacc.withdraw(2000));
+				System.out.println("With balance = " + acc.withdraw(2000));
 			} catch (IllegalStateException ise) {
 				ise.printStackTrace(System.err);
 

@@ -1,6 +1,6 @@
 package OOP_Ex2;
 
-class Circle implements GeomericObject {
+class Circle extends Shape implements GeometricObject {
 	protected double radius;
 
 	Circle(double radius) {
@@ -16,17 +16,19 @@ class Circle implements GeomericObject {
 	}
 
 	@Override
-	public double getPerimeter() {
+	public double calcPerimeter() {
 		return Math.PI * radius * 2;
 	}
 
 	@Override
-	public double getArea() {
+	public double calcArea() {
 		return Math.PI * radius * radius;
 	}
 
 	@Override
 	public String toString() {
-		return "Circle[radius=" + radius + "]]";
+		return "Circle{" +
+			"radius=" + radius +
+			'}';
 	}
 }
