@@ -52,12 +52,15 @@ public class Account {
 		this.targetAccount = targetAccount;
 	}
 
-	public void transferTo(int amount) {
+	public void transferTo(int amount) throws Exception {
 		this.transferTo((this.targetAccount), amount);
 	}
 
 	//송금 (내 계좌의 잔액은 줄어들고, another의 잔액은 늘어남)
-	public void transferTo(Account targetAccount, int amount) {
+	public void transferTo(Account targetAccount, int amount) throws Exception {
+		if (targetAccount == null) {
+			throw new Exception("송금 받을 계좌가 없습니다");
+		}
 		if (amount > this.balance) {
 			System.out.println("송금액이 잔액을 초과하였습니다");
 			return;
@@ -111,7 +114,7 @@ public class Account {
 	}
 
 	@SuppressWarnings("checkstyle:WhitespaceAround")
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		Account[] accounts = new Account[3];
 		accounts[0] = new Account();

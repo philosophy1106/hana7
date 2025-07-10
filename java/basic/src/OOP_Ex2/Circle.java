@@ -1,7 +1,7 @@
 package OOP_Ex2;
 
 class Circle implements GeomericObject {
-	double radius = 1.0;
+	protected double radius;
 
 	Circle(double radius) {
 		this.radius = radius;
