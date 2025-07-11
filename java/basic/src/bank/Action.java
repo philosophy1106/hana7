@@ -13,7 +13,7 @@ public enum Action {
 		}
 	}, 송금(">") {
 		@Override
-		public void banking(Account account, int amount) {
+		public void banking(Account account, int amount) throws Exception {
 			account.transferTo(amount);
 		}
 	}, 조회("*") {
@@ -37,5 +37,5 @@ public enum Action {
 		return this.cmd.equals(cmd);
 	}
 
-	public abstract void banking(Account account, int amount);
+	public abstract void banking(Account account, int amount) throws Exception;
 }
