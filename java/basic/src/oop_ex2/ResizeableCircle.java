@@ -1,4 +1,4 @@
-package OOP_Ex2;
+package oop_ex2;
 
 public class ResizeableCircle extends Circle implements Resizeable {
 

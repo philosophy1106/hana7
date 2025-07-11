@@ -1,4 +1,4 @@
-package OOP_Ex1;
+package oop_ex1;
 
 class Rectangle extends Shape {
 	double width;

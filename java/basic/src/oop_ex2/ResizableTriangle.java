@@ -1,4 +1,4 @@
-package OOP_Ex2;
+package oop_ex2;
 
 public class ResizableTriangle extends Triangle implements Resizeable {
 	ResizableTriangle(double base, double height) {
