@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-interface MyPredicate {
-	boolean test(int value);
+interface MyPredicate<T, R> {
+	R test(T t);
 }
 
+//T input R output
 interface MyFunction<T, R> {
 	R apply(T t); //제너릭...
 }
 
-interface MyReducer {
-	int reduce(int num1, int num2);
+interface MyReducer<E, R> {
+	R reduce(R num1, E num2);
 }
 
 public class LambdaPractice {
-	static List<Integer> filter(List<Integer> list, MyPredicate predicate) {
+	static List<Integer> filter(List<Integer> list, MyPredicate<Integer, Boolean> predicate) {
 		List<Integer> result = new ArrayList<>();
 		for (Integer i : list) {
 			if (predicate.test(i)) {
@@ -35,12 +36,21 @@ public class LambdaPractice {
 		return result;
 	}
 
-	static Integer reducer(List<Integer> list, int initValue, MyReducer predicate) {
+	static Integer reducer(List<Integer> list, int initValue, MyReducer<Integer, Integer> predicate) {
 		int result = initValue;
 		for (Integer i : list) {
 			result = predicate.reduce(result, i);
 		}
 		return result;
+	}
+
+	static Integer find(List<Integer> list, MyPredicate<Integer, Boolean> predicate) {
+		for (Integer i : list) {
+			if (predicate.test(i)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	public static void main(String[] args) {
@@ -50,8 +60,7 @@ public class LambdaPractice {
 		System.out.println(evens);
 		List<Integer> squares = map(numbers, value -> value * value);
 		System.out.println(squares);
-		//Integer bigger3 = map(numbers, value -> value > 3);
-		List<Integer> bigger3 = filter(numbers, value -> value > 3);
+		Integer bigger3 = find(numbers, value -> value > 3); //findFirst구현?
 		System.out.println(bigger3);
 		int sum = reducer(numbers, 0, (a, b) -> a + b);
 		System.out.println(sum);
