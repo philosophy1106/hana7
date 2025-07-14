@@ -36,10 +36,10 @@ public class LambdaPractice {
 		return result;
 	}
 
-	static Integer reducer(List<Integer> list, int initValue, MyReducer<Integer, Integer> predicate) {
-		int result = initValue;
-		for (Integer i : list) {
-			result = predicate.reduce(result, i);
+	static Integer reducer(List<Integer> list, MyReducer<Integer, Integer> predicate) {
+		int result = list.getFirst();
+		for (int i = 1; i < list.size(); i++) {
+			result = predicate.reduce(result, list.get(i));
 		}
 		return result;
 	}
@@ -62,7 +62,7 @@ public class LambdaPractice {
 		System.out.println(squares);
 		Integer bigger3 = find(numbers, value -> value > 3); //findFirst구현?
 		System.out.println(bigger3);
-		int sum = reducer(numbers, 0, (a, b) -> a + b);
+		int sum = reducer(numbers, (a, b) -> a + b);
 		System.out.println(sum);
 	}
 }
