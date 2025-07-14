@@ -26,7 +26,6 @@ public class Ex1 {
 			try {
 				score = Integer.parseInt(sc.nextLine());
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
 				System.out.println("정수를 입력하세요");
 				continue;
 			}
