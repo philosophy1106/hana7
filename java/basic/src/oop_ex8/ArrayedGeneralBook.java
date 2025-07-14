@@ -1,4 +1,4 @@
-package OOP_Ex8;
+package oop_ex8;
 
 public class ArrayedGeneralBook implements GeneralBook {
 	private String[] name;

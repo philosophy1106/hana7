@@ -1,4 +1,4 @@
-package OOP_Ex2;
+package oop_ex2;
 
 //public class AppShape<T extends Shape & Resizeable> {
 public class AppShape<T extends Shape> implements Resizeable {

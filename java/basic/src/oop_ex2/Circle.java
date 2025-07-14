@@ -1,4 +1,4 @@
-package OOP_Ex2;
+package oop_ex2;
 
 class Circle extends Shape implements GeometricObject {
 	protected double radius;

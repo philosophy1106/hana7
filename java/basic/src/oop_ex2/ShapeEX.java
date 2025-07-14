@@ -1,4 +1,4 @@
-package OOP_Ex2;
+package oop_ex2;
 
 public class ShapeEX {
 	public static void main(String[] args) {
