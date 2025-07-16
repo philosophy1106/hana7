@@ -36,6 +36,5 @@ public class LambdaTest {
 				Math::random).limit(5).mapToDouble(Double::doubleValue).average());
 		Optional<Integer> f5 = list.stream().filter(n -> n > 5).findFirst();
 		System.out.println("f5 = " + f5 + ", " + f5.isEmpty());
-
 	}
 }
