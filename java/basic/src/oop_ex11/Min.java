@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 public @interface Min {
 	double value() default 0;
 
-	String msg() default "";
+	String msg() default "At least %.0f";
 }

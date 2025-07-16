@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 public @interface Max {
 	double value() default 0;
 
-	String msg() default "";
+	String msg() default "Not over %.0f";
 }

@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 public @interface In {
 	String[] value();
 
-	String msg() default "다음과 같은 이름이어야 합니다 ";
+	String msg() default "Only %s available ";
 }

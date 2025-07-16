@@ -51,14 +51,15 @@ public class Reflection extends Parent {
 			if (field.isAnnotationPresent(Min.class)) {
 				Min min = field.getAnnotation(Min.class);
 				if (num < min.value()) {
-					msg.add(name + "::" + getMessage(min.msg(), "At least " + min.value()));
+					//getMessage -> msg 보내서, default면 value 붙여서 출력 or 그냥 출력
+					msg.add(name + "::" + min.msg().formatted(min.value()));
 				}
 			}
 
 			if (field.isAnnotationPresent(Max.class)) {
 				Max max = field.getAnnotation(Max.class);
 				if (num > max.value()) {
-					msg.add(name + "::" + getMessage(max.msg(), "Not over " + max.value()));
+					msg.add(name + "::" + max.msg().formatted(max.value()));
 				}
 			}
 
@@ -69,7 +70,7 @@ public class Reflection extends Parent {
 				if (value instanceof String) {
 					if (!Arrays.asList(strings).contains((String)value)) {
 						msg.add(
-							name + "::" + in.msg() + Arrays.toString(field.getAnnotation(In.class).value()));
+							name + "::" + in.msg().formatted(Arrays.toString(field.getAnnotation(In.class).value())));
 					}
 				}
 
@@ -98,10 +99,6 @@ public class Reflection extends Parent {
 		}
 	}
 
-	private static String getMessage(String defaultMessage, String message) {
-		return defaultMessage.isBlank() ? message : defaultMessage;
-	}
-
 	public Reflection(int id, String name) {
 		super(id);
 		this.name = name;
@@ -115,7 +112,7 @@ public class Reflection extends Parent {
 	}
 
 	public static void main(String[] args) throws IllegalAccessException {
-		Reflection ref = new Reflection(123, "Ho", 2, 34.0, true);
+		Reflection ref = new Reflection(5, "");
 		List<String> messages = Reflection.validate(ref);
 		System.out.println(messages);
 	}
