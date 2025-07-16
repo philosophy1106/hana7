@@ -2,6 +2,7 @@ package oop_ex10;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -33,5 +34,7 @@ public class LambdaTest {
 		System.out.println(
 			"Stream.generate(Math::random).limit(5).mapToDouble(Double::doubleValue).average() = " + Stream.generate(
 				Math::random).limit(5).mapToDouble(Double::doubleValue).average());
+		Optional<Integer> f5 = list.stream().filter(n -> n > 5).findFirst();
+		System.out.println("f5 = " + f5 + ", " + f5.isEmpty());
 	}
 }
