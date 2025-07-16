@@ -1,4 +1,4 @@
-package oop_ex11;
+package oop_ex11.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

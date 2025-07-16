@@ -10,6 +10,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import oop_ex11.annotations.IllegalAnnotationException;
+import oop_ex11.annotations.In;
+import oop_ex11.annotations.Max;
+import oop_ex11.annotations.Min;
+import oop_ex11.annotations.NotNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -66,6 +71,9 @@ public class Reflection extends Parent {
 			if (field.isAnnotationPresent(In.class)) {
 				In in = field.getAnnotation(In.class);
 				String[] strings = in.value();
+
+				if (field.getType() != String.class)
+					throw new IllegalAnnotationException("Only use In annotation for String field!!");
 
 				if (value instanceof String) {
 					if (!Arrays.asList(strings).contains((String)value)) {
