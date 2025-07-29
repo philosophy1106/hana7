@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hana7.springdemo.dao.UserDAO">
+<mapper namespace="com.hana7.springdemo.jpa.dao.UserDAO">
     <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into User(name, mobile, email) values(#{name}, #{mobile}, #{email})
     </insert>
 
-    <select id="getUser" resultType="com.hana7.springdemo.dto.User">
+    <select id="getUser" resultType="com.hana7.springdemo.jpa.dto.User">
         select id, name, mobile, email
         from User
     </select>
