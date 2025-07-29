@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.hana7.springdemo.jpa.dao.PostRepository;
-import com.hana7.springdemo.jpa.dto.Post;
-import com.hana7.springdemo.jpa.dto.User;
+import com.hana7.springdemo.dao.PostRepository;
+import com.hana7.springdemo.dto.Post;
+import com.hana7.springdemo.dto.User;
 
 import lombok.extern.log4j.Log4j2;
 

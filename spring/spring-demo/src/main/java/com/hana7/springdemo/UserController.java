@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hana7.springdemo.jpa.dto.User;
+import com.hana7.springdemo.dto.User;
 import com.hana7.springdemo.jpa.service.UserService;
 
 import lombok.extern.log4j.Log4j2;

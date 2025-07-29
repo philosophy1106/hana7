@@ -51,18 +51,9 @@ public class Member extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private BloodType bloodType;
 
-	private String password;
-
-	@CreationTimestamp
-	// @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	@Column(updatable = false)
-	@ColumnDefault("CURRENT_TIMESTAMP(6)")
-	private LocalDateTime createdAt;
-
-	@UpdateTimestamp
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-	private LocalDateTime updatedAt;
+	private String passwd;
 
 	@Transient
-	private int auth;
+	@Builder.Default
+	private int auth = 9;
 }

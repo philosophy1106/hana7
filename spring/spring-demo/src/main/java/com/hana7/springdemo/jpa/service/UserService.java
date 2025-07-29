@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.hana7.springdemo.jpa.dao.UserDAO;
-import com.hana7.springdemo.jpa.dto.User;
+import com.hana7.springdemo.dao.UserDAO;
+import com.hana7.springdemo.dto.User;
 
 @Service
 public class UserService {
