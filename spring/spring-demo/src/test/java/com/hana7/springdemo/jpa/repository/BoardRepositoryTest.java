@@ -3,6 +3,7 @@ package com.hana7.springdemo.jpa.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Order;
@@ -12,16 +13,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
+import com.hana7.springdemo.jpa.entity.BloodType;
 import com.hana7.springdemo.jpa.entity.Board;
 import com.hana7.springdemo.jpa.entity.BoardContent;
+import com.hana7.springdemo.jpa.entity.Member;
 
-@Rollback(false)
+//@Rollback(false)
 class BoardRepositoryTest extends RepositoryTest {
 	@Autowired
 	BoardRepository repository;
 
 	@Autowired
-	BoardContentRepository contentRepository;
+	MemberRepository memberRepository;
 
 	private static final int LIMIT = 10;
 
@@ -34,7 +37,7 @@ class BoardRepositoryTest extends RepositoryTest {
 			.limit(LIMIT)
 			.map(n -> Board.builder()
 				.title("Title" + n)
-				.writer("Writer" + n)
+				.writer(getMember())
 				// .content(new BoardContent("Content" + n))
 				.build())
 			.toList();
@@ -58,4 +61,14 @@ class BoardRepositoryTest extends RepositoryTest {
 			.forEach(this::print);
 	}
 
+	private Member getMember() {
+		Optional<Member> member = memberRepository.findById(1L);
+		return member.orElseGet(() -> memberRepository.save(
+			Member.builder()
+				.nickname("Hongxxx")
+				.email("hongxxx@gamil.com")
+				.bloodType(BloodType.B)
+				.build())
+		);
+	}
 }
