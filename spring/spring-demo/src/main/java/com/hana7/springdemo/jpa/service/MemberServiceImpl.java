@@ -50,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
 			.bloodType(member.getBloodType())
 			.build();
 	}
-	private static MemberDTO toDetailDTO(Member member) {
+	static MemberDTO toDetailDTO(Member member) {
 		return MemberDetailResponseDTO.builder()
 			.id(member.getId())
 			.nickname(member.getNickname())

@@ -15,17 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hana7.springdemo.dto.User;
 import com.hana7.springdemo.jpa.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("/users")
 @Log4j2
+@Tag(name = "사용자 APIs", description = "사용자 목록/등록/수정/삭제")
+
 public class UserController {
 	private final UserService service;
 	public UserController(UserService service) {
 		this.service = service;
 	}
 	@PostMapping("")
+	@Tag(name = "사용자 가입")
 	public User registry(@RequestBody @Validated User user) {
 		log.debug("user={}", user);
 

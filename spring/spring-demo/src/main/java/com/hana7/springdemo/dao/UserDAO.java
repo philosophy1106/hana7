@@ -10,9 +10,9 @@ import com.hana7.springdemo.dto.User;
 @Repository
 @Mapper
 public interface UserDAO {
-	public User getUser(int id);
-	public void insert(User user);
-	public void update(User user);
-	public void delete(int id);
-	List<User> getUsers();
+	 User getUser(int id);
+	 void insert(User user);
+	 void update(User user);
+	 void delete(int id);
+	 List<User> getUsers();
 }

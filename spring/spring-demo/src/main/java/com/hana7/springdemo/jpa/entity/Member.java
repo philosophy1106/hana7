@@ -65,6 +65,12 @@ public class Member extends BaseEntity {
 
 	@OneToMany(mappedBy = "writer")
 	//@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<Board> boards = new ArrayList<>(); //초기화 안 해도 OK
+	private List<Board> boards;
+
+	public List<Board> getBoards() {
+		if(this.boards == null)
+			return new ArrayList<>();
+		return this.boards;
+	}
 
 }
