@@ -67,6 +67,9 @@ public class Member extends BaseEntity {
 	//@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Board> boards;
 
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+	private List<MemberImage> images;
+
 	public List<Board> getBoards() {
 		if(this.boards == null)
 			return new ArrayList<>();

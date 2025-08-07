@@ -1,6 +1,7 @@
 package com.hana7.springdemo.jpa.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,9 @@ import org.springframework.util.StringUtils;
 
 import com.hana7.springdemo.jpa.dto.SearchCond;
 import com.hana7.springdemo.jpa.entity.Member;
+import com.hana7.springdemo.jpa.entity.MemberImage;
 import com.hana7.springdemo.jpa.entity.QMember;
+import com.hana7.springdemo.jpa.repository.MemberImageRepository;
 import com.hana7.springdemo.jpa.repository.MemberRepository;
 import com.querydsl.core.BooleanBuilder;
 
@@ -18,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberDAOImpl implements MemberDAO {
 	private final MemberRepository repository;
+	private final MemberImageRepository imageRepository;
 
 	@Override
 	public List<Member> findAll(SearchCond searchCond) {
@@ -41,7 +45,8 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public Member findOne(long id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElse(null)
+			;
 
 	}
 
@@ -51,5 +56,21 @@ public class MemberDAOImpl implements MemberDAO {
 		// 	repository.deleteById(id);
 		// 	return 1;
 		// }
-		return repository.removeById(id);	}
+		return repository.removeById(id);
+	}
+
+
+	@Override
+	public List<MemberImage> uploadImages(Long memberId, List<MemberImage> memberImages) {
+		Optional<Member> memberOptional = repository.findById(memberId);
+		if (memberOptional.isPresent()) {
+			Member member = memberOptional.get();
+			memberImages.forEach(mi -> mi.setMember(member));
+			member.setImages(memberImages);
+			imageRepository.saveAll(memberImages);
+		}
+
+		return memberImages;
+	}
+
 }
